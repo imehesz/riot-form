@@ -1,0 +1,6 @@
+extends: ../.eslintrc.yaml
+env:
+  mocha: true
+
+ecmaFeatures:
+  modules: true
