@@ -1,0 +1,30 @@
+{
+  "name": "riot-form",
+  "description": "Form inputs for RiotJS",
+  "main": "lib/index.js",
+  "authors": [
+    "Daniel Perez <daniel@claudetech.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "riotjs",
+    "form"
+  ],
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node"
+  ],
+  "homepage": "https://github.com/claudetech/riotjs-form",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "riot": "^2.3.16"
+  }
+}

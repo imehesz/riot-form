@@ -1,5 +1,5 @@
 import {expect}    from 'chai'
-import {BaseInput} from '..'
+import {BaseInput} from '../..'
 
 class DummyInput extends BaseInput {
 }

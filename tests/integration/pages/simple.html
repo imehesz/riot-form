@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>simple.html Hello</title>
+
+    <script src="./components/riot/riot.js"></script>
+    <script src="./js/riot-form.js"></script>
+  </head>
+  <body>
+
+    <rf-form></rf-form>
+
+
+    <script>
+      var form = new riotForm.Form.Builder()
+                             .addInput({name: 'hello', type: 'text'})
+                             .setModel({hello: 'world'})
+                             .build();
+      riot.mount('rf-form', {form: form, class: 'custom-class', name: 'simple-form'});
+    </script>
+  </body>
+</html>

@@ -36,6 +36,7 @@
     "karma-webpack": "^1.7.0",
     "mocha": "^2.4.5",
     "phantomjs-prebuilt": "^2.1.4",
+    "pioneer": "^0.11.7",
     "riot": "^2.3.16",
     "riotjs-loader": "^1.2.0",
     "webpack": "^1.12.14",

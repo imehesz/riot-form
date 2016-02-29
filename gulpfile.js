@@ -17,7 +17,7 @@ gulp.task('ci', function (done) {
 
 
 gulp.task('test', function (done) {
-  runKarma({}, done)
+  runKarma({singleRun: true, autoWatch: false}, done)
 })
 
 gulp.task('webpack:watch', function () {

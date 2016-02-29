@@ -10,6 +10,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'riot-form.js',
+    library: 'riotForm',
     libraryTarget: 'umd'
   },
   devtool: 'source-map',
@@ -29,7 +30,12 @@ module.exports = {
       }
     }]
   },
+  externals: {
+    riot: 'riot'
+  },
   plugins: [
-    new webpack.ProvidePlugin({riot: 'riot'})
+    new webpack.ProvidePlugin({
+      riot: 'riot'
+    })
   ]
 }

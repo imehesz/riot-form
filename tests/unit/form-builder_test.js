@@ -1,5 +1,5 @@
 import {expect}       from 'chai'
-import {Form, inputs} from '..'
+import {Form, inputs} from '../..'
 
 describe('FormBuilder', () => {
   it('should build a form', () => {

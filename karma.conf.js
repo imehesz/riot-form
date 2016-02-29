@@ -3,7 +3,7 @@
 var _ = require('lodash')
 
 var webpackConfig = _(require('./webpack.config'))
-      .omit('entry', 'output')
+      .omit('entry', 'output', 'externals')
       .assign({devtool: 'inline-sourcemap'})
       .value()
 
@@ -13,11 +13,11 @@ module.exports = function (config) {
     frameworks: ['mocha'],
 
     files: [
-      'test/**/*_test.js'
+      'tests/unit/**/*_test.js'
     ],
 
     preprocessors: {
-      'test/**/*.js': ['webpack', 'sourcemap']
+      'tests/unit/**/*.js': ['webpack', 'sourcemap']
     },
 
     webpack: webpackConfig,
