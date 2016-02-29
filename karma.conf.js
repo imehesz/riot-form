@@ -1,6 +1,11 @@
-'use strict';
+'use strict'
 
-var _ = require('lodash');
+var _ = require('lodash')
+
+var webpackConfig = _(require('./webpack.config'))
+      .omit('entry', 'output')
+      .assign({devtool: 'inline-sourcemap'})
+      .value()
 
 module.exports = function (config) {
   config.set({
@@ -15,7 +20,8 @@ module.exports = function (config) {
       'test/**/*.js': ['webpack', 'sourcemap']
     },
 
-    webpack: _.omit(require('./webpack.config'), 'entry', 'output'),
+    webpack: webpackConfig,
+
     webpackMiddleware: {
       noInfo: true
     },
@@ -42,5 +48,5 @@ module.exports = function (config) {
       'karma-chrome-launcher',
       'karma-phantomjs-launcher'
     ]
-  });
-};
+  })
+}

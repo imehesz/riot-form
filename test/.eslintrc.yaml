@@ -2,5 +2,5 @@ extends: ../.eslintrc.yaml
 env:
   mocha: true
 
-ecmaFeatures:
-  modules: true
+parserOptions:
+  sourceType: module
