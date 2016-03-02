@@ -9,7 +9,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'riot-form.js',
+    filename: process.env.NODE_ENV === 'production' ? 'riot-form.min.js' : 'riot-form.js',
     library: 'riotForm',
     libraryTarget: 'umd'
   },

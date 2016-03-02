@@ -15,7 +15,6 @@ gulp.task('ci', function (done) {
   runKarma({singleRun: false, autoWatch: true}, done)
 })
 
-
 gulp.task('test', function (done) {
   runKarma({singleRun: true, autoWatch: false}, done)
 })
@@ -23,5 +22,5 @@ gulp.task('test', function (done) {
 gulp.task('webpack:watch', function () {
   return gulp.src('lib/index.js')
     .pipe(webpack(Object.assign(require('./webpack.config.js'), {watch: true})))
-    .pipe(gulp.dest('./build'))
+    .pipe(gulp.dest('./dist'))
 })
