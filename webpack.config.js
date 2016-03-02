@@ -8,7 +8,7 @@ module.exports = {
     lib: ['./lib/index.js']
   },
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, 'dist'),
     filename: 'riot-form.js',
     library: 'riotForm',
     libraryTarget: 'umd'
@@ -26,7 +26,8 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel',
       query: {
-        presets: ['es2015']
+        presets: ['es2015'],
+        plugins: ['transform-runtime']
       }
     }]
   },
