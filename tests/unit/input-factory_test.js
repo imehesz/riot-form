@@ -1,5 +1,5 @@
 import {expect}                  from 'chai'
-import {inputFactory, BaseInput} from '../..'
+import {inputFactory, BaseInput} from 'riot-form'
 
 class DummyInput extends BaseInput {}
 DummyInput.type       = 'dummy'

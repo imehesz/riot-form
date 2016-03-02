@@ -1,5 +1,5 @@
 import {expect}    from 'chai'
-import {BaseInput} from '../..'
+import {BaseInput} from 'riot-form'
 
 class DummyInput extends BaseInput {
 }
@@ -63,6 +63,39 @@ describe('BaseInput', () => {
       })
       input.value = 'hello'
       expect(input.errors).to.deep.eq(errors)
+    })
+  })
+
+  describe('formattedErrors', () => {
+    it('should return error when it is string', () => {
+      const errors = 'should contain only numbers'
+      const input = new DummyInput({
+        name: 'hello',
+        validate: (_v) => errors
+      })
+      input.validate()
+      expect(input.formattedErrors).to.eq(errors)
+    })
+
+    it('should return the first error when it is an array', () => {
+      const errors = ['first', 'second']
+      const input = new DummyInput({
+        name: 'hello',
+        validate: (_v) => errors
+      })
+      input.validate()
+      expect(input.formattedErrors).to.eq(errors[0])
+    })
+
+    it('should use the formatErrors function when present', () => {
+      const errors = ['first', 'second']
+      const input = new DummyInput({
+        name: 'hello',
+        formatErrors: (err) => `** ${err[0]} **`,
+        validate: (_v) => errors
+      })
+      input.validate()
+      expect(input.formattedErrors).to.eq(`** ${errors[0]} **`)
     })
   })
 })

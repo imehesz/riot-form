@@ -1,9 +1,9 @@
 import {expect}       from 'chai'
-import {Form, inputs} from '../..'
+import {Form, inputs} from 'riot-form'
 
 describe('FormBuilder', () => {
   it('should build a form', () => {
-    expect(new Form.Builder().build()).to.be.instanceof(Form)
+    expect(new Form.Builder().setName('hello').build()).to.be.instanceof(Form)
   })
 
   it('should throw when input do not have a name', () => {
@@ -20,6 +20,7 @@ describe('FormBuilder', () => {
     it('should set model', () => {
       const form = new Form.Builder()
               .setModel({name: 'foo'})
+              .setName('foo')
               .build()
       expect(form.model.name).to.eq('foo')
     })
@@ -29,6 +30,7 @@ describe('FormBuilder', () => {
     it('should add input from plain objects', () => {
       const name = 'hello'
       const form = new Form.Builder()
+              .setName('foo')
               .addInput({name: name, type: 'text'})
               .build()
       expect(form.inputs.length).to.eq(1)
@@ -37,7 +39,9 @@ describe('FormBuilder', () => {
 
     it('should add input from input objects', () => {
       const form = new Form.Builder()
+              .setName('foo')
               .addInput(new inputs.TextInput({name: 'hello'}))
+              .setName('foo')
               .build()
       expect(form.inputs.length).to.eq(1)
       expect(form.getInput('hello').name).to.eq('hello')
@@ -47,10 +51,12 @@ describe('FormBuilder', () => {
   describe('addInputs', () => {
     it('should add multiple inputs', () => {
       const form = new Form.Builder()
+              .setName('foo')
               .addInputs([
                 {name: 'foo', type: 'text'},
                 {name: 'bar', type: 'text'}
               ])
+              .setName('foo')
               .build()
 
       expect(form.inputs.length).to.eq(2)
@@ -61,6 +67,7 @@ describe('FormBuilder', () => {
 
   it('should create a form with value prefilled', () => {
     const form = new Form.Builder()
+            .setName('foo')
             .addInput({name: 'name', type: 'text'})
             .setModel({name: 'Daniel'})
             .build()

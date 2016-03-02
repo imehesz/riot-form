@@ -29,7 +29,12 @@ module.exports = {
         presets: ['es2015'],
         plugins: ['transform-runtime']
       }
-    }]
+    }, {test: /\.html$/, loader: 'html'}]
+  },
+  resolve: {
+    alias: {
+      'riot-form': __dirname
+    }
   },
   externals: {
     riot: 'riot'

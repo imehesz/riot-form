@@ -1,0 +1,9 @@
+<div class="{ getGroupClassName() } { 'has-error' : !opts.model.valid }">
+  <label class="{ getLabelClassName() }" for="{ getID() }">{ getLabel() }</label>
+  <div class="{ getInputContainerClassName() }">
+    <div rf-input-elem></div>
+    <div if="{ !opts.model.valid }" class="{ getErrorClassName() }">
+      { formatErrors(opts.model.errors) }
+    </div>
+  </div>
+</div>

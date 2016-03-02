@@ -1,6 +1,7 @@
 extends: ../../.eslintrc.yaml
 env:
   mocha: true
+  browser: true
 
 parserOptions:
   sourceType: module

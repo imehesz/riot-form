@@ -4,20 +4,38 @@
     <meta charset="UTF-8"/>
     <title>simple.html Hello</title>
 
-    <script src="./components/riot/riot.js"></script>
-    <script src="./js/riot-form.js"></script>
   </head>
   <body>
 
-    <rf-form></rf-form>
+    <app></app>
 
+    <script type="riot/tag">
+      <app>
+        <rf-form model="{ form }" class-name="custom-class">
+          <input type="submit" value="Save">
+        </rf-form>
+
+        <div class="output">
+          <div class="username">
+            Username: { form.model.username }
+          </div>
+        </div>
+
+        this.form = new riotForm.Form.Builder()
+                                 .setName('simple')
+                                 .addInput({name: 'username', type: 'text'})
+                                 .setModel({username: 'world'})
+                                 .build();
+
+        this.form.on('change', () => this.update())
+      </app>
+    </script>
+
+    <script src="./components/riot/riot+compiler.js"></script>
+    <script src="./js/riot-form.js"></script>
 
     <script>
-      var form = new riotForm.Form.Builder()
-                             .addInput({name: 'hello', type: 'text'})
-                             .setModel({hello: 'world'})
-                             .build();
-      riot.mount('rf-form', {form: form, class: 'custom-class', name: 'simple-form'});
+      riot.mount('app')
     </script>
   </body>
 </html>
