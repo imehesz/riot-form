@@ -107,9 +107,9 @@ You can easily do so by creating a subclass of `riotForm.BaseInput` and register
 With ES5
 
 ```javascript
+// ES5
 var riotForm = require('riot-form')
 
-// ES5
 var MyInput = riotForm.BaseInput.extend({
   myFunc: function () {
     return 'whatever you want'
