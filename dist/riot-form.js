@@ -148,6 +148,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.inputs = _inputs2.default;
 	exports.BaseInput = _base2.default;
 	exports.config = _config2.default;
+	exports.default = {
+	  configure: configure,
+	  Form: _form2.default,
+	  inputFactory: _inputFactory2.default,
+	  inputs: _inputs2.default,
+	  BaseInput: _base2.default,
+	  config: _config2.default
+	};
 
 /***/ },
 /* 2 */
@@ -909,6 +917,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _assign2 = _interopRequireDefault(_assign);
 	
+	var _keys = __webpack_require__(2);
+	
+	var _keys2 = _interopRequireDefault(_keys);
+	
 	var _getIterator2 = __webpack_require__(14);
 	
 	var _getIterator3 = _interopRequireDefault(_getIterator2);
@@ -939,7 +951,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _assert2.default)(config.name, 'A form must have a name');
 	    _riot2.default.observable(this);
 	    this._config = config;
-	    this._inputs = config.inputs || [];
+	    this._inputs = config.inputs || {};
 	    this.model = config.model || {};
 	    this._errors = {};
 	  }
@@ -952,9 +964,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _iteratorError = undefined;
 	
 	      try {
-	        for (var _iterator = (0, _getIterator3.default)(this.inputs), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	          var input = _step.value;
+	        for (var _iterator = (0, _getIterator3.default)((0, _keys2.default)(this.inputs)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var name = _step.value;
 	
+	          var input = this.inputs[name];
 	          input.off('change');
 	          input.value = this.model[input.name];
 	          input.on('change', this._makeChangeHandler(input));
@@ -986,19 +999,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      };
 	    }
 	  }, {
-	    key: 'getInput',
-	    value: function getInput(name) {
+	    key: 'eachInput',
+	    value: function eachInput(f) {
 	      var _iteratorNormalCompletion2 = true;
 	      var _didIteratorError2 = false;
 	      var _iteratorError2 = undefined;
 	
 	      try {
-	        for (var _iterator2 = (0, _getIterator3.default)(this.inputs), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	          var input = _step2.value;
+	        for (var _iterator2 = (0, _getIterator3.default)((0, _keys2.default)(this.inputs)), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	          var name = _step2.value;
 	
-	          if (input.name === name) {
-	            return input;
-	          }
+	          f(this.inputs[name], name);
 	        }
 	      } catch (err) {
 	        _didIteratorError2 = true;
@@ -1014,8 +1025,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        }
 	      }
-	
-	      throw new Error('no input named ' + name);
 	    }
 	  }, {
 	    key: 'name',
@@ -1059,11 +1068,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _iteratorError3 = undefined;
 	
 	      try {
-	        for (var _iterator3 = (0, _getIterator3.default)(this.inputs), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	          var input = _step3.value;
+	        for (var _iterator3 = (0, _getIterator3.default)((0, _keys2.default)(this.inputs)), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	          var name = _step3.value;
 	
+	          var input = this.inputs[name];
 	          input.validate();
-	          this.errors[input.name] = input.errors;
+	          this.errors[name] = input.errors;
 	          if (input.errors) {
 	            valid = false;
 	          }
@@ -1084,6 +1094,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	
 	      return valid;
+	    }
+	  }, {
+	    key: 'inputsCount',
+	    get: function get() {
+	      return (0, _keys2.default)(this.inputs).length;
 	    }
 	  }]);
 	  return Form;
@@ -2304,7 +2319,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _classCallCheck3.default)(this, FormBuilder);
 	
 	    this._model = {};
-	    this._inputs = [];
+	    this._inputs = {};
 	    this._name = null;
 	  }
 	
@@ -2315,7 +2330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        input = _inputFactory2.default.create(input);
 	      }
 	      (0, _assert2.default)(input.name, noNameMessage);
-	      this._inputs.push(input);
+	      this._inputs[input.name] = input;
 	      return this;
 	    }
 	  }, {
@@ -3242,7 +3257,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-form', '<form name="{opts.model.name}" class="{opts.className}" onsubmit="{opts.onsubmit}"> <rf-input each="{input in opts.model.inputs}" model="{input}" form-name="{parent.opts.model.name}"> <yield></yield> </form>', '', '', function (opts) {}, '{ }');
+	riot.tag2('rf-form', '<form name="{opts.model.name}" class="{opts.className}" onsubmit="{opts.onsubmit}"> <rf-input each="{name, input in opts.model.inputs}" model="{input}" form-name="{parent.opts.model.name}"> <yield></yield> </form>', '', '', function (opts) {}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
 /***/ },
@@ -3298,7 +3313,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-text-input', '<input id="{getID()}" name="{getName()}" type="{opts.model.type}" value="{opts.model.value}" onkeyup="{handleChange}" onchange="{handleChange}" placeholder="{getPlaceholder()}">', '', '', function (opts) {
+	riot.tag2('rf-text-input', '<input id="{getID()}" name="{getName()}" class="{opts.className}" type="{opts.model.type}" value="{opts.model.value}" onkeyup="{handleChange}" onchange="{handleChange}" __autofocus="{opts.autofocus}" placeholder="{getPlaceholder()}">', '', '', function (opts) {
 	    var _this = this;
 	
 	    this.mixin('rf-input-helpers');
