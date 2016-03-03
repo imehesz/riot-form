@@ -3,3 +3,4 @@
 /tests/integration/pages/js
 
 *.jar
+/dist

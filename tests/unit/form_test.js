@@ -6,6 +6,20 @@ describe('Form', () => {
     expect(new Form({name: 'hello'}).on).to.be.a('function')
   })
 
+  describe('inputs', () => {
+    it('should be undefined when input does not exist', () => {
+      const form = new Form.Builder().setName('foo').build()
+      expect(form.inputs.whatever).to.be.undefined
+    })
+
+    it('should return input when present', () => {
+      const input = new inputs.TextInput({name: 'foo'})
+      const form = new Form.Builder().setName('foo').addInput(input).build()
+      expect(form.inputs.foo).to.eq(input)
+    })
+  })
+
+
   it('should synchronize inputs', () => {
     const input = new inputs.TextInput({name: 'foo'})
     const form = new Form.Builder().setName('foo').addInput(input).build()
@@ -63,18 +77,6 @@ describe('Form', () => {
       expect(form.errors.foo).to.be.undefined
       expect(form.valid).to.be.false
       expect(form.errors.foo).to.deep.eq(errors)
-    })
-  })
-
-  describe('getInput', () => {
-    it('should throw when input does not exist', () => {
-      const form = new Form.Builder().setName('foo').build()
-      expect(() => form.getInput('whatever')).to.throw(Error)
-    })
-
-    it('should return input when present', () => {
-      const input = new inputs.TextInput({name: 'foo'})
-      const form = new Form.Builder().setName('foo').addInput(input).build()
     })
   })
 })

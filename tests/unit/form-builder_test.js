@@ -33,8 +33,8 @@ describe('FormBuilder', () => {
               .setName('foo')
               .addInput({name: name, type: 'text'})
               .build()
-      expect(form.inputs.length).to.eq(1)
-      expect(form.getInput(name).name).to.eq(name)
+      expect(form.inputsCount).to.eq(1)
+      expect(form.inputs[name].name).to.eq(name)
     })
 
     it('should add input from input objects', () => {
@@ -43,8 +43,8 @@ describe('FormBuilder', () => {
               .addInput(new inputs.TextInput({name: 'hello'}))
               .setName('foo')
               .build()
-      expect(form.inputs.length).to.eq(1)
-      expect(form.getInput('hello').name).to.eq('hello')
+      expect(form.inputsCount).to.eq(1)
+      expect(form.inputs.hello.name).to.eq('hello')
     })
   })
 
@@ -59,8 +59,8 @@ describe('FormBuilder', () => {
               .setName('foo')
               .build()
 
-      expect(form.inputs.length).to.eq(2)
-      expect(form.getInput('foo').name).to.eq('foo')
+      expect(form.inputsCount).to.eq(2)
+      expect(form.inputs.foo.name).to.eq('foo')
     })
   })
 
@@ -72,7 +72,7 @@ describe('FormBuilder', () => {
             .setModel({name: 'Daniel'})
             .build()
 
-    expect(form.getInput('name').value).to.eq('Daniel')
+    expect(form.inputs.name.value).to.eq('Daniel')
     expect(form.model).to.deep.eq({name: 'Daniel'})
   })
 })
