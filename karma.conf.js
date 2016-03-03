@@ -36,7 +36,7 @@ module.exports = function (config) {
 
     autoWatch: false,
 
-    browsers: process.env.CI ? ['PhantomJS'] : ['Chrome'],
+    browsers: process.env.CI ? ['Firefox'] : ['Chrome'],
 
     singleRun: true,
 
@@ -46,7 +46,7 @@ module.exports = function (config) {
       'karma-sourcemap-loader',
       'karma-mocha-reporter',
       'karma-chrome-launcher',
-      'karma-phantomjs-launcher'
+      'karma-firefox-launcher'
     ]
   })
 }

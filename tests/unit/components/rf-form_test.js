@@ -4,8 +4,6 @@ import {Form}     from 'riot-form'
 import {mountTag} from './helpers'
 
 describe('rf-form', () => {
-  let tag
-
   const form = new Form.Builder()
           .setName('hello')
           .addInput({name: 'username', type: 'text'})
@@ -13,7 +11,7 @@ describe('rf-form', () => {
           .build()
 
   before(() => {
-    tag = mountTag('rf-form', {
+    mountTag('rf-form', {
       model: form,
       className: 'custom-class'
     })
@@ -32,9 +30,11 @@ describe('rf-form', () => {
   })
 
   it('should render the inputs', () => {
-    const input = document.querySelector('input[name="username"]')
+    const input = document.querySelector('input[name="hello_username"]')
     expect(input).not.to.be.null
-    expect(input.placeholder).to.eq('Username')
+    if (input.placeholder) {
+      expect(input.placeholder).to.eq('Username')
+    }
     expect(input.value).to.eq('world')
   })
 })

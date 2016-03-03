@@ -1,16 +1,17 @@
-<rf-text-input>
-  <input
+<rf-textarea-input>
+  <textarea
       id={ getID() }
       name={ getName() }
-      type={ opts.model.type }
       value={ opts.model.value }
       onkeyup={ handleChange }
       onchange={ handleChange }
       placeholder={ getPlaceholder() }>
+    { opts.model.value }
+  </textarea>
 
   <script>
     this.mixin('rf-input-helpers')
 
     this.handleChange = (e) => this.assignValue(e.target.value)
   </script>
-</rf-text-input>
+</rf-textarea-input>

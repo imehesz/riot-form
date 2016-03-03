@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8"/>
-    <title>simple.html Hello</title>
+    <title>simple.html</title>
 
   </head>
   <body>
@@ -16,15 +16,15 @@
         </rf-form>
 
         <div class="output">
-          <div class="username">
-            Username: { form.model.username }
-          </div>
+          Username: <span class="username">{ form.model.username }</span>
+          Profile: <span class="profile">{ form.model.profile }</span>
         </div>
 
         this.form = new riotForm.Form.Builder()
                                  .setName('simple')
                                  .addInput({name: 'username', type: 'text'})
-                                 .setModel({username: 'world'})
+                                 .addInput({name: 'profile', type: 'textarea'})
+                                 .setModel({username: 'Daniel', profile: 'My name is Daniel'})
                                  .build();
 
         this.form.on('change', () => this.update())

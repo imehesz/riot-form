@@ -31,11 +31,11 @@ describe('inputFactory', () => {
 
   describe('create', () => {
     it('should throw when no type given', () => {
-      expect(() => inputFactory.create()).to.throw(Error)
+      expect(() => inputFactory.create({name: 'hello'})).to.throw(Error)
     })
 
     it('should throw when input not available', () => {
-      expect(() => inputFactory.create({type: 'whatever'})).to.throw(Error)
+      expect(() => inputFactory.create({name: 'hello', type: 'whatever'})).to.throw(Error)
     })
 
     it('should return input instance when it exists', () => {
