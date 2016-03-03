@@ -10,6 +10,13 @@ describe('BaseInput', () => {
     expect(() => new DummyInput({})).to.throw(Error)
   })
 
+  describe('new instances', () => {
+    it('should accept value', () => {
+      const input = new DummyInput({name: 'hello', value: 'foobar'})
+      expect(input.value).to.eq('foobar')
+    })
+  })
+
   describe('name', () => {
     it('should return config name', () => {
       const input = new DummyInput({name: 'hello'})
@@ -96,6 +103,31 @@ describe('BaseInput', () => {
       })
       input.validate()
       expect(input.formattedErrors).to.eq(`** ${errors[0]} **`)
+    })
+  })
+
+  describe('.extends', () => {
+    const MyInput = BaseInput.extend({
+      myFunc: function () {
+        return 'myResult'
+      }
+    })
+    MyInput.type       = 'mine'
+    MyInput.defaultTag = 'the-best-tag-ever'
+
+    it('should enforce a name', () => {
+      expect(() => new MyInput({})).to.throw(Error)
+    })
+
+    it('should have input properties', () => {
+      const input = new MyInput({name: 'hello'})
+      expect(input.name).to.eq('hello')
+      expect(input.tag).to.eq('the-best-tag-ever')
+    })
+
+    it('should have defined functions', () => {
+      const input = new MyInput({name: 'hello'})
+      expect(input.myFunc()).to.eq('myResult')
     })
   })
 })

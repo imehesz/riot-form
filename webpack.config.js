@@ -33,7 +33,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'riot-form': __dirname
+      'riot-form': path.join(__dirname, './lib')
     }
   },
   externals: {
