@@ -2454,9 +2454,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  (0, _createClass3.default)(BaseInput, [{
 	    key: '_setValue',
-	    value: function _setValue(value) {
-	      this._value = this.process(value);
+	    value: function _setValue(rawValue) {
+	      var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	
+	      var value = this.process(rawValue);
+	      if (value === this._value) {
+	        return;
+	      }
+	      this._value = value;
 	      this.validate();
+	      if (!options.silent) {
+	        this.trigger('change', value);
+	      }
 	    }
 	  }, {
 	    key: 'validate',
@@ -2482,7 +2491,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'value',
 	    set: function set(value) {
 	      this._setValue(value);
-	      this.trigger('change', value);
 	    },
 	    get: function get() {
 	      return this._value;
@@ -3289,6 +3297,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  this.mixin('rf-input-helpers');
 	  var tag = null;
+	  var currentValue = null;
 	
 	  var makeData = function makeData() {
 	    return { model: opts.model, formName: opts.formName };
@@ -3303,7 +3312,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 	
 	  this.on('update', function () {
-	    if (tag) {
+	    if (tag && opts.model.value !== currentValue) {
+	      currentValue = opts.model.value;
 	      tag.update(makeData());
 	    }
 	  });
@@ -3321,14 +3331,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-text-input', '<input id="{getID()}" name="{getName()}" class="{opts.className}" type="{opts.model.type}" value="{opts.model.value}" onkeyup="{handleChange}" onchange="{handleChange}" __autofocus="{opts.autofocus}" placeholder="{getPlaceholder()}">', '', '', function (opts) {
-	    var _this = this;
-	
+	riot.tag2('rf-text-input', '<input id="{getID()}" name="{getName()}" class="{opts.className}" type="{opts.model.type}" riot-value="{currentValue}" onkeyup="{handleChange}" onchange="{handleChange}" __autofocus="{opts.autofocus}" placeholder="{getPlaceholder()}">', '', '', function (opts) {
 	    this.mixin('rf-input-helpers');
-	
-	    this.handleChange = function (e) {
-	        return _this.assignValue(e.target.value);
-	    };
 	}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
@@ -3338,14 +3342,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-textarea-input', '<textarea id="{getID()}" name="{getName()}" value="{opts.model.value}" onkeyup="{handleChange}" onchange="{handleChange}" placeholder="{getPlaceholder()}"> </textarea>', '', '', function (opts) {
-	    var _this = this;
-	
+	riot.tag2('rf-textarea-input', '<textarea id="{getID()}" name="{getName()}" onkeyup="{handleChange}" onchange="{handleChange}" placeholder="{getPlaceholder()}">{currentValue}</textarea>', '', '', function (opts) {
 	    this.mixin('rf-input-helpers');
-	
-	    this.handleChange = function (e) {
-	        return _this.assignValue(e.target.value);
-	    };
 	}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
@@ -3374,6 +3372,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_riot2.default.mixin('rf-input-helpers', {
+	  init: function init() {
+	    this.currentValue = this.opts.model.value;
+	  },
 	  getID: function getID() {
 	    return _config2.default.makeID(this.opts.model.name, this.getFormName());
 	  },
@@ -3406,6 +3407,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  getFormName: function getFormName() {
 	    return this.opts.formName || this.opts.model.formName;
+	  },
+	  handleChange: function handleChange(e) {
+	    this.assignValue(e.target.value);
 	  }
 	});
 
