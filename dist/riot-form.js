@@ -3424,7 +3424,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    this.on('mount', function () {
 	      var input = _this[_this.getName()];
-	      if (input) {
+	      if (input && _this.opts.model.value !== undefined) {
 	        input.value = _this.opts.model.value;
 	      }
 	    });
