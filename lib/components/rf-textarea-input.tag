@@ -6,7 +6,6 @@
       onkeyup={ handleChange }
       onchange={ handleChange }
       placeholder={ getPlaceholder() }>
-    { opts.model.value }
   </textarea>
 
   <script>
