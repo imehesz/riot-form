@@ -2450,6 +2450,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (config.value) {
 	      this._setValue(config.value);
 	    }
+	    if (config.formName) {
+	      this.formName = config.formName;
+	    }
 	  }
 	
 	  (0, _createClass3.default)(BaseInput, [{
@@ -3384,16 +3387,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.currentValue = this.opts.model.value;
 	  },
 	  getID: function getID() {
-	    return _config2.default.makeID(this.opts.model.name, this.getFormName());
+	    return this.opts.inputId || _config2.default.makeID(this.opts.model.name, this.getFormName());
 	  },
 	  getName: function getName() {
-	    return _config2.default.makeName(this.opts.model.name, this.getFormName());
+	    return this.opts.inputName || _config2.default.makeName(this.opts.model.name, this.getFormName());
 	  },
 	  getLabel: function getLabel() {
-	    return _config2.default.formatLabel(this.opts.model.name, this.getFormName());
+	    return this.opts.inputLabel || _config2.default.formatLabel(this.opts.model.name, this.getFormName());
 	  },
 	  getPlaceholder: function getPlaceholder() {
-	    return _config2.default.formatPlaceholder(this.opts.model.name, this.getFormName());
+	    return this.opts.inputPlaceholder || _config2.default.formatPlaceholder(this.opts.model.name, this.getFormName());
 	  },
 	  formatErrors: function formatErrors(errors) {
 	    return _config2.default.formatErrors(errors, this.opts.model.name, this.getFormName());
