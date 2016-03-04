@@ -2317,15 +2317,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var noNameMessage = 'You must provide an input name';
-	
 	var FormBuilder = function () {
-	  function FormBuilder() {
+	  function FormBuilder(name) {
 	    (0, _classCallCheck3.default)(this, FormBuilder);
 	
+	    (0, _assert2.default)(name, 'You must provide a name for the form');
 	    this._model = {};
 	    this._inputs = {};
-	    this._name = null;
+	    this._name = name;
 	  }
 	
 	  (0, _createClass3.default)(FormBuilder, [{
@@ -2334,7 +2333,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (!(input instanceof _base2.default)) {
 	        input = _inputFactory2.default.create(input);
 	      }
-	      (0, _assert2.default)(input.name, noNameMessage);
+	      (0, _assert2.default)(input.name, 'You must provide an input name');
+	      input.formName = this._name;
 	      this._inputs[input.name] = input;
 	      return this;
 	    }
@@ -2372,12 +2372,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'setModel',
 	    value: function setModel(model) {
 	      this._model = model;
-	      return this;
-	    }
-	  }, {
-	    key: 'setName',
-	    value: function setName(name) {
-	      this._name = name;
 	      return this;
 	    }
 	  }, {
@@ -2492,6 +2486,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    get: function get() {
 	      return this._value;
+	    }
+	  }, {
+	    key: 'formName',
+	    set: function set(name) {
+	      (0, _assert2.default)(name, 'the form name cannot be empty');
+	      this._formName = name;
+	    },
+	    get: function get() {
+	      return this._formName;
 	    }
 	  }, {
 	    key: 'valid',
@@ -3262,7 +3265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-form', '<form name="{opts.model.name}" class="{opts.className}" onsubmit="{opts.onsubmit}"> <rf-input each="{name, input in opts.model.inputs}" model="{input}" form-name="{parent.opts.model.name}"> <yield></yield> </form>', '', '', function (opts) {}, '{ }');
+	riot.tag2('rf-form', '<form name="{opts.model.name}" class="{opts.className}" onsubmit="{opts.onsubmit}"> <rf-input each="{name, input in opts.model.inputs}" model="{input}"> <yield></yield> </form>', '', '', function (opts) {}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
 /***/ },
@@ -3372,19 +3375,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	_riot2.default.mixin('rf-input-helpers', {
 	  getID: function getID() {
-	    return _config2.default.makeID(this.opts.model.name, this.opts.formName);
+	    return _config2.default.makeID(this.opts.model.name, this.getFormName());
 	  },
 	  getName: function getName() {
-	    return _config2.default.makeName(this.opts.model.name, this.opts.formName);
+	    return _config2.default.makeName(this.opts.model.name, this.getFormName());
 	  },
 	  getLabel: function getLabel() {
-	    return _config2.default.formatLabel(this.opts.model.name, this.opts.formName);
+	    return _config2.default.formatLabel(this.opts.model.name, this.getFormName());
 	  },
 	  getPlaceholder: function getPlaceholder() {
-	    return _config2.default.formatPlaceholder(this.opts.model.name, this.opts.formName);
+	    return _config2.default.formatPlaceholder(this.opts.model.name, this.getFormName());
 	  },
 	  formatErrors: function formatErrors(errors) {
-	    return _config2.default.formatErrors(errors, this.opts.model.name, this.opts.formName);
+	    return _config2.default.formatErrors(errors, this.opts.model.name, this.getFormName());
 	  },
 	  getLabelClassName: function getLabelClassName() {
 	    return this.opts.labelClassName || _config2.default.labelClassName;
@@ -3400,6 +3403,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  assignValue: function assignValue(value) {
 	    this.opts.model.value = value;
+	  },
+	  getFormName: function getFormName() {
+	    return this.opts.formName || this.opts.model.formName;
 	  }
 	});
 
