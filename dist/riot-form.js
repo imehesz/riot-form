@@ -2461,6 +2461,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (value === this._value) {
 	        return;
 	      }
+	      this._rawValue = rawValue;
 	      this._value = value;
 	      this.validate();
 	      if (!options.silent) {
@@ -2486,6 +2487,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'tag',
 	    get: function get() {
 	      return this.config.tag || this.constructor.defaultTag;
+	    }
+	  }, {
+	    key: 'rawValue',
+	    get: function get() {
+	      return this._rawValue;
 	    }
 	  }, {
 	    key: 'value',
@@ -3331,8 +3337,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-text-input', '<input id="{getID()}" name="{getName()}" class="{opts.className}" type="{opts.model.type}" riot-value="{currentValue}" onkeyup="{handleChange}" onchange="{handleChange}" __autofocus="{opts.autofocus}" placeholder="{getPlaceholder()}">', '', '', function (opts) {
+	riot.tag2('rf-text-input', '<input id="{getID()}" name="{getName()}" class="{opts.className}" type="{opts.model.type}" onkeyup="{handleChange}" onchange="{handleChange}" __autofocus="{opts.autofocus}" placeholder="{getPlaceholder()}">', '', '', function (opts) {
 	    this.mixin('rf-input-helpers');
+	    this.initializeValue();
 	}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
@@ -3342,8 +3349,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-textarea-input', '<textarea id="{getID()}" name="{getName()}" onkeyup="{handleChange}" onchange="{handleChange}" placeholder="{getPlaceholder()}">{currentValue}</textarea>', '', '', function (opts) {
+	riot.tag2('rf-textarea-input', '<textarea id="{getID()}" name="{getName()}" onkeyup="{handleChange}" onchange="{handleChange}" placeholder="{getPlaceholder()}"></textarea>', '', '', function (opts) {
 	    this.mixin('rf-input-helpers');
+	    this.initializeValue();
 	}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
@@ -3410,6 +3418,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  handleChange: function handleChange(e) {
 	    this.assignValue(e.target.value);
+	  },
+	  initializeValue: function initializeValue() {
+	    var _this = this;
+	
+	    this.on('mount', function () {
+	      var input = _this[_this.getName()];
+	      if (input) {
+	        input.value = _this.opts.model.value;
+	      }
+	    });
 	  }
 	});
 
