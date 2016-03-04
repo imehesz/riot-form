@@ -22,7 +22,7 @@ bower install riot-form --save
 
 ## Usage
 
-### Example
+### Example with automatic rendering
 
 ```html
 <!doctype html>
@@ -68,7 +68,60 @@ bower install riot-form --save
 </html>
 ```
 
-the `form.model` property will always be synchronized with the content of the form.
+### Example with manual rendering
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>simple.html</title>
+
+  </head>
+  <body>
+
+    <app></app>
+
+    <script type="riot/tag">
+      <app>
+        <form name="{ form.name }" onsubmit="{ doSomething }">
+          <rf-text-input model="{ form.inputs.username }" form-name="{ form.name }" autofocus>
+          <rf-textarea-input model="{ form.inputs.profile }" form-name="{ form.name }">
+          <input type="submit" value="Save">
+        </form>
+
+        <div class="output">
+          Username: <span class="username">{ form.model.username }</span>
+          Profile: <span class="profile">{ form.model.profile }</span>
+        </div>
+
+        this.form = new riotForm.Form.Builder()
+                                .setName('simple')
+                                .addInput({name: 'username', type: 'text'})
+                                .addInput({name: 'profile', type: 'textarea'})
+                                .setModel({username: 'Daniel', profile: 'My name is Daniel'})
+                                .build();
+
+
+        this.doSomething = function () {
+          console.log(this.form.model);
+        }.bind(this);
+
+        this.form.on('change', () => this.update())
+      </app>
+    </script>
+
+    <script src="./components/riot/riot+compiler.js"></script>
+    <script src="./js/riot-form.js"></script>
+
+    <script>
+      riot.mount('app')
+    </script>
+  </body>
+</html>
+```
+
+Note that in both cases, the `form.model` property will always be synchronized with the content of the form.
 
 ## API
 
@@ -77,11 +130,10 @@ the `form.model` property will always be synchronized with the content of the fo
 #### `Form.prototype`
 
   * `name`: Returns the name of the form, included in the config
-  * `inputs`: Returns all the inputs of the form
+  * `inputs`: Returns all the inputs of the form as an object
   * `model`: Returns the model of the form
   * `errors`: Returns an object with the errors of the form
   * `valid`: Returns a boolean with `true` if the form is valid and `false` otherwise
-  * `getInput(name)`: Retrieves a form input by name
 
 #### `Form.Builder`
 
