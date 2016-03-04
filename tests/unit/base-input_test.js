@@ -2,6 +2,9 @@ import {expect}    from 'chai'
 import {BaseInput} from 'riot-form'
 
 class DummyInput extends BaseInput {
+  get defaultValue() {
+    return 'dummy'
+  }
 }
 DummyInput.defaultTag = 'dummy-tag'
 
@@ -14,6 +17,11 @@ describe('BaseInput', () => {
     it('should accept value', () => {
       const input = new DummyInput({name: 'hello', value: 'foobar'})
       expect(input.value).to.eq('foobar')
+    })
+
+    it('should set value to default value', () => {
+      const input = new DummyInput({name: 'hello'})
+      expect(input.value).to.eq('dummy')
     })
   })
 
