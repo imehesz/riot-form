@@ -874,7 +874,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  makeName: function makeName(inputName, formName) {
 	    return formName + '_' + inputName;
-	  }
+	  },
+	
+	  labelClassName: '',
+	  groupClassName: '',
+	  errorClassName: '',
+	  inputContainerClassName: ''
 	};
 	
 	var config = (0, _assign2.default)({}, defaultConfig);
