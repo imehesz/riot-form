@@ -2447,9 +2447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _riot2.default.observable(this);
 	    (0, _assert2.default)(config.name, 'An input must have a name');
 	    this.config = config;
-	    if (config.value) {
-	      this._setValue(config.value);
-	    }
+	    this._setValue(config.value || this.defaultValue, { silent: true });
 	    if (config.formName) {
 	      this.formName = config.formName;
 	    }
@@ -2523,6 +2521,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'type',
 	    get: function get() {
 	      return this.config.type || this.constructor.type;
+	    }
+	  }, {
+	    key: 'defaultValue',
+	    get: function get() {
+	      return undefined;
 	    }
 	  }, {
 	    key: 'formattedErrors',
