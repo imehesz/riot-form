@@ -4,7 +4,6 @@
       name={ getName() }
       class={ opts.className }
       type={ opts.model.type }
-      riot-value={ currentValue }
       onkeyup={ handleChange }
       onchange={ handleChange }
       autofocus={ opts.autofocus }
@@ -12,5 +11,6 @@
 
   <script>
     this.mixin('rf-input-helpers')
+    this.initializeValue()
   </script>
 </rf-text-input>

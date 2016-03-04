@@ -4,9 +4,10 @@
       name={ getName() }
       onkeyup={ handleChange }
       onchange={ handleChange }
-      placeholder={ getPlaceholder() }>{ currentValue }</textarea>
+      placeholder={ getPlaceholder() }></textarea>
 
   <script>
     this.mixin('rf-input-helpers')
+    this.initializeValue()
   </script>
 </rf-textarea-input>

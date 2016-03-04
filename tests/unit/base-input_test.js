@@ -61,6 +61,18 @@ describe('BaseInput', () => {
     })
   })
 
+  describe('rawValue', () => {
+    it('should not be processed', () => {
+      const input = new DummyInput({
+        name: 'hello',
+        process: (v) => v.trim()
+      })
+      const v = '  hello   '
+      input.value = v
+      expect(input.rawValue).to.eq(v)
+    })
+  })
+
   describe('validate', () => {
     it('should be called when present', () => {
       const errors = ['should contain only numbers']
