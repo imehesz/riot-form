@@ -3338,7 +3338,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-textarea-input', '<textarea id="{getID()}" name="{getName()}" value="{opts.model.value}" onkeyup="{handleChange}" onchange="{handleChange}" placeholder="{getPlaceholder()}"> {opts.model.value} </textarea>', '', '', function (opts) {
+	riot.tag2('rf-textarea-input', '<textarea id="{getID()}" name="{getName()}" value="{opts.model.value}" onkeyup="{handleChange}" onchange="{handleChange}" placeholder="{getPlaceholder()}"> </textarea>', '', '', function (opts) {
 	    var _this = this;
 	
 	    this.mixin('rf-input-helpers');
