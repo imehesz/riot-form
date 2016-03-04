@@ -6,6 +6,7 @@ import {mountTag} from './helpers'
 describe('rf-form', () => {
   const form = new Form.Builder('hello')
           .addInput({name: 'username', type: 'text'})
+          .addInput({name: 'other', type: 'text'})
           .setModel({username: 'world'})
           .build()
 
@@ -35,5 +36,11 @@ describe('rf-form', () => {
       expect(input.placeholder).to.eq('Username')
     }
     expect(input.value).to.eq('world')
+  })
+
+  it('should not set undefined initial values', () => {
+    const input = document.querySelector('input[name="hello_other"]')
+    expect(input).not.to.be.null
+    expect(input.value).to.eq('')
   })
 })
