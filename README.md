@@ -47,8 +47,7 @@ bower install riot-form --save
           Profile: <span class="profile">{ form.model.profile }</span>
         </div>
 
-        this.form = new riotForm.Form.Builder()
-                                .setName('simple')
+        this.form = new riotForm.Form.Builder('simple')
                                 .addInput({name: 'username', type: 'text'})
                                 .addInput({name: 'profile', type: 'textarea'})
                                 .setModel({username: 'Daniel', profile: 'My name is Daniel'})
@@ -85,8 +84,8 @@ bower install riot-form --save
     <script type="riot/tag">
       <app>
         <form name="{ form.name }" onsubmit="{ doSomething }">
-          <rf-text-input model="{ form.inputs.username }" form-name="{ form.name }" autofocus>
-          <rf-textarea-input model="{ form.inputs.profile }" form-name="{ form.name }">
+          <rf-text-input model="{ form.inputs.username }" autofocus>
+          <rf-textarea-input model="{ form.inputs.profile }">
           <input type="submit" value="Save">
         </form>
 
@@ -95,8 +94,7 @@ bower install riot-form --save
           Profile: <span class="profile">{ form.model.profile }</span>
         </div>
 
-        this.form = new riotForm.Form.Builder()
-                                .setName('simple')
+        this.form = new riotForm.Form.Builder('simple')
                                 .addInput({name: 'username', type: 'text'})
                                 .addInput({name: 'profile', type: 'textarea'})
                                 .setModel({username: 'Daniel', profile: 'My name is Daniel'})
@@ -137,7 +135,6 @@ Note that in both cases, the `form.model` property will always be synchronized w
 
 #### `Form.Builder`
 
-  * `setName`: Set the name of the form. Must be called or an error will be thrown on build
   * `addInput`: Add an input to the form. It can be any object with a `name` and a `type` properties
                 You can pass a `tag` as an option to change the tag that will be rendered for this input
   * `setModel`: Set the form model. form values will be populated with it

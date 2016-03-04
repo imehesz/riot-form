@@ -20,8 +20,7 @@
           Profile: <span class="profile">{ form.model.profile }</span>
         </div>
 
-        this.form = new riotForm.Form.Builder()
-                                 .setName('simple')
+        this.form = new riotForm.Form.Builder('simple')
                                  .addInput({name: 'username', type: 'text'})
                                  .addInput({name: 'profile', type: 'textarea'})
                                  .setModel({username: 'Daniel', profile: 'My name is Daniel'})

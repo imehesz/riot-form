@@ -4,8 +4,7 @@ import {Form}     from 'riot-form'
 import {mountTag} from './helpers'
 
 describe('rf-form', () => {
-  const form = new Form.Builder()
-          .setName('hello')
+  const form = new Form.Builder('hello')
           .addInput({name: 'username', type: 'text'})
           .setModel({username: 'world'})
           .build()
