@@ -4,7 +4,7 @@
   "description": "Form inputs for RiotJS",
   "main": "dist/riot-form.js",
   "scripts": {
-    "test": "make test",
+    "test": "make -k test",
     "prepublish": "make build"
   },
   "repository": {
@@ -33,7 +33,7 @@
     "cucumber": "^0.9.5",
     "eslint": "^2.2.0",
     "gulp": "^3.9.1",
-    "gulp-cucumber": "0.0.17",
+    "gulp-cucumber": "0.0.18",
     "html-loader": "^0.4.3",
     "karma": "^0.13.21",
     "karma-chrome-launcher": "^0.2.2",

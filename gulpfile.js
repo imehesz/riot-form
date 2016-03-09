@@ -48,6 +48,7 @@ gulp.task('features', ['server'], function () {
       steps: './tests/integration/steps/*.js',
       support: './tests/integration/support/*.js'
     }))
+    .on('error', onExit)
     .once('end', onExit)
 })
 

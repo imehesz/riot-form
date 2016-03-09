@@ -25,7 +25,7 @@ selenium: prepare
 	java -jar $(SELENIUM_JAR) >> tmp/selenium.log 2>&1 &
 
 kill_selenium: prepare
-	ps aux | grep java | grep -v grep | awk '{ print $$2 }' | xargs kill
+	ps aux | grep $(SELENIUM_JAR) | grep -v grep | awk '{ print $$2 }' | xargs kill
 
 run_integration: normal_build
 	./node_modules/.bin/gulp features
