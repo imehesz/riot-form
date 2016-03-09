@@ -23,18 +23,16 @@ describe('rf-form', () => {
     expect(form.className).to.eq('custom-class')
   })
 
-  it('should render the inputs', () => {
+  it('should render the label', () => {
     const label = document.querySelector('label[for="hello_username"]')
     expect(label).not.to.be.null
-    expect(label.innerText).to.eq('Username')
+    expect(label.innerText || label.textContent).to.eq('Username')
   })
 
-  it('should render the inputs', () => {
+  it('should render the input', () => {
     const input = document.querySelector('input[name="hello_username"]')
     expect(input).not.to.be.null
-    if (input.placeholder) {
-      expect(input.placeholder).to.eq('Username')
-    }
+    expect(input.placeholder).to.eq('Username')
     expect(input.value).to.eq('world')
   })
 
