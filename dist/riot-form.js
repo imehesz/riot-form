@@ -941,7 +941,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _riot2.default.observable(this);
 	    this._config = config;
 	    this._inputs = config.inputs || {};
+	    this._forms = config.forms || {};
 	    this.model = config.model || {};
+	    this.name = config.name;
 	    this._errors = {};
 	  }
 	
@@ -977,28 +979,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
-	    key: '_makeChangeHandler',
-	    value: function _makeChangeHandler(input) {
-	      var _this = this;
-	
-	      return function (value) {
-	        _this.model[input.name] = value;
-	        _this.errors[input.name] = input.errors;
-	        _this.trigger('change', input.name, value);
-	      };
-	    }
-	  }, {
-	    key: 'eachInput',
-	    value: function eachInput(f) {
+	    key: '_setFormValues',
+	    value: function _setFormValues() {
 	      var _iteratorNormalCompletion2 = true;
 	      var _didIteratorError2 = false;
 	      var _iteratorError2 = undefined;
 	
 	      try {
-	        for (var _iterator2 = (0, _getIterator3.default)((0, _keys2.default)(this.inputs)), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	        for (var _iterator2 = (0, _getIterator3.default)((0, _keys2.default)(this.forms)), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	          var name = _step2.value;
 	
-	          f(this.inputs[name], name);
+	          var form = this.forms[name];
+	          form.off('change');
+	          form.model = this.model[form.name];
+	          form.on('change', this._makeFormChangeHandler(form));
 	        }
 	      } catch (err) {
 	        _didIteratorError2 = true;
@@ -1016,9 +1010,97 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
+	    key: '_makeChangeHandler',
+	    value: function _makeChangeHandler(input) {
+	      var _this = this;
+	
+	      return function (value) {
+	        console.log(input);
+	        console.log(value);
+	        _this.model[input.name] = value;
+	        _this.errors[input.name] = input.errors;
+	        _this.trigger('change', input.name, value);
+	      };
+	    }
+	  }, {
+	    key: '_makeFormChangeHandler',
+	    value: function _makeFormChangeHandler(form) {
+	      var _this2 = this;
+	
+	      return function (inputName, value) {
+	        console.log(form.name);
+	        console.log(form);
+	        _this2.model[form.name] = form.model;
+	        _this2.errors[form.name] = form.errors;
+	        _this2.trigger('change', form.name, form.model);
+	      };
+	    }
+	  }, {
+	    key: 'eachInput',
+	    value: function eachInput(f) {
+	      var _iteratorNormalCompletion3 = true;
+	      var _didIteratorError3 = false;
+	      var _iteratorError3 = undefined;
+	
+	      try {
+	        for (var _iterator3 = (0, _getIterator3.default)((0, _keys2.default)(this.inputs)), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	          var name = _step3.value;
+	
+	          f(this.inputs[name], name);
+	        }
+	      } catch (err) {
+	        _didIteratorError3 = true;
+	        _iteratorError3 = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	            _iterator3.return();
+	          }
+	        } finally {
+	          if (_didIteratorError3) {
+	            throw _iteratorError3;
+	          }
+	        }
+	      }
+	    }
+	  }, {
 	    key: 'name',
 	    get: function get() {
-	      return this._config.name;
+	      var nameList = this._name.split('.');
+	      return nameList[nameList.length - 1];
+	    },
+	    set: function set(name) {
+	      this._name = name;
+	      var _iteratorNormalCompletion4 = true;
+	      var _didIteratorError4 = false;
+	      var _iteratorError4 = undefined;
+	
+	      try {
+	        for (var _iterator4 = (0, _getIterator3.default)((0, _keys2.default)(this.inputs)), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	          name = _step4.value;
+	
+	          var input = this.inputs[name];
+	          input.formName = this.fullName;
+	        }
+	      } catch (err) {
+	        _didIteratorError4 = true;
+	        _iteratorError4 = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	            _iterator4.return();
+	          }
+	        } finally {
+	          if (_didIteratorError4) {
+	            throw _iteratorError4;
+	          }
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'fullName',
+	    get: function get() {
+	      return this._name;
 	    }
 	  }, {
 	    key: 'config',
@@ -1037,11 +1119,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this._model = (0, _objectAssign2.default)({}, model);
 	      }
 	      this._setInputValues();
+	      this._setFormValues();
 	    }
 	  }, {
 	    key: 'inputs',
 	    get: function get() {
 	      return this._inputs;
+	    }
+	  }, {
+	    key: 'forms',
+	    get: function get() {
+	      return this._forms;
 	    }
 	  }, {
 	    key: 'errors',
@@ -1052,13 +1140,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'valid',
 	    get: function get() {
 	      var valid = true;
-	      var _iteratorNormalCompletion3 = true;
-	      var _didIteratorError3 = false;
-	      var _iteratorError3 = undefined;
+	      var _iteratorNormalCompletion5 = true;
+	      var _didIteratorError5 = false;
+	      var _iteratorError5 = undefined;
 	
 	      try {
-	        for (var _iterator3 = (0, _getIterator3.default)((0, _keys2.default)(this.inputs)), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	          var name = _step3.value;
+	        for (var _iterator5 = (0, _getIterator3.default)((0, _keys2.default)(this.inputs)), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+	          var name = _step5.value;
 	
 	          var input = this.inputs[name];
 	          input.validate();
@@ -1068,16 +1156,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        }
 	      } catch (err) {
-	        _didIteratorError3 = true;
-	        _iteratorError3 = err;
+	        _didIteratorError5 = true;
+	        _iteratorError5 = err;
 	      } finally {
 	        try {
-	          if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	            _iterator3.return();
+	          if (!_iteratorNormalCompletion5 && _iterator5.return) {
+	            _iterator5.return();
 	          }
 	        } finally {
-	          if (_didIteratorError3) {
-	            throw _iteratorError3;
+	          if (_didIteratorError5) {
+	            throw _iteratorError5;
 	          }
 	        }
 	      }
@@ -1123,7 +1211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = (function () {
+	exports.default = function () {
 	  function defineProperties(target, props) {
 	    for (var i = 0; i < props.length; i++) {
 	      var descriptor = props[i];
@@ -1139,7 +1227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (staticProps) defineProperties(Constructor, staticProps);
 	    return Constructor;
 	  };
-	})();
+	}();
 
 /***/ },
 /* 51 */
@@ -2308,6 +2396,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _assert2.default)(name, 'You must provide a name for the form');
 	    this._model = {};
 	    this._inputs = {};
+	    this._forms = {};
 	    this._name = name;
 	  }
 	
@@ -2318,7 +2407,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        input = _inputFactory2.default.create(input);
 	      }
 	      (0, _assert2.default)(input.name, 'You must provide an input name');
-	      input.formName = this._name;
 	      this._inputs[input.name] = input;
 	      return this;
 	    }
@@ -2353,6 +2441,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return this;
 	    }
 	  }, {
+	    key: 'addNestedForm',
+	    value: function addNestedForm(form) {
+	      (0, _assert2.default)(form.name, 'A form must have a name');
+	      (0, _assert2.default)(form instanceof _form2.default, 'A form must be instance of Form');
+	      form.name = this._name + '.' + form.name;
+	      this._forms[form.name] = form;
+	      return this;
+	    }
+	  }, {
 	    key: 'setModel',
 	    value: function setModel(model) {
 	      this._model = model;
@@ -2366,6 +2463,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return new _form2.default((0, _objectAssign2.default)({
 	        model: this._model,
 	        inputs: this._inputs,
+	        forms: this._forms,
 	        name: this._name
 	      }, config));
 	    }
@@ -3254,13 +3352,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	__webpack_require__(84);
-
+	
 	__webpack_require__(85);
-
+	
 	__webpack_require__(87);
-
+	
 	__webpack_require__(88);
 
 /***/ },
@@ -3269,7 +3367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-form', '<form name="{opts.model.name}" class="{opts.className}" onsubmit="{opts.onsubmit}"> <rf-input each="{name, input in opts.model.inputs}" model="{input}"> <yield></yield> </form>', '', '', function (opts) {}, '{ }');
+	riot.tag2('rf-form', '<form name="{opts.model.name}" class="{opts.className}" onsubmit="{opts.onsubmit}"> <rf-input each="{name, input in opts.model.inputs}" model="{input}"> <yield></yield> </form>', '', '', function (opts) {});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
 
 /***/ },
@@ -3330,7 +3428,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	riot.tag2('rf-text-input', '<input id="{getID()}" name="{getName()}" class="{opts.className}" type="{opts.model.type}" onkeyup="{handleChange}" onchange="{handleChange}" __autofocus="{opts.autofocus}" placeholder="{getPlaceholder()}">', '', '', function (opts) {
 	    this.mixin('rf-input-helpers');
 	    this.initializeValue();
-	}, '{ }');
+	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
 
 /***/ },
@@ -3342,7 +3440,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	riot.tag2('rf-textarea-input', '<textarea id="{getID()}" name="{getName()}" onkeyup="{handleChange}" onchange="{handleChange}" placeholder="{getPlaceholder()}"></textarea>', '', '', function (opts) {
 	    this.mixin('rf-input-helpers');
 	    this.initializeValue();
-	}, '{ }');
+	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
 
 /***/ },
@@ -3350,7 +3448,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	__webpack_require__(90);
 
 /***/ },

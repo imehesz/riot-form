@@ -171,7 +171,7 @@ MyInput.defaultTag = 'my-tag'
 riotForm.inputFactory.register(MyInput)
 ```
 
-or with ES5
+or with ES6
 
 ```javascript
 // ES6
