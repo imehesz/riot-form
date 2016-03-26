@@ -64,6 +64,27 @@ describe('FormBuilder', () => {
     })
   })
 
+  describe('addNestedForm', () => {
+    it('should throw when form is not Form instance', () => {
+      const builder = new Form.Builder('foo')
+      expect(() => builder.addNestedForm({name: 'hello'})).to.throw(Error)
+    })
+
+
+    it('should add nested form', () => {
+      const form = new Form.Builder('foo')
+              .addNestedForm(
+                new Form.Builder('bar')
+                  .addInput({name: 'baz', type: 'text'})
+                  .build())
+              .build()
+      expect(form.forms.bar.inputsCount).to.eq(1)
+      expect(form.forms.bar.name).to.eq('bar')
+      expect(form.forms.bar.fullName).to.eq('foo.bar')
+      expect(form.forms.bar.inputs.baz.name).to.eq('baz')
+      expect(form.forms.bar.inputs.baz.formName).to.eq('foo.bar')
+    })
+  })
 
   it('should create a form with value prefilled', () => {
     const form = new Form.Builder('foo')

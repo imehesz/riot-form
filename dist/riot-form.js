@@ -1015,8 +1015,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this = this;
 	
 	      return function (value) {
-	        console.log(input);
-	        console.log(value);
 	        _this.model[input.name] = value;
 	        _this.errors[input.name] = input.errors;
 	        _this.trigger('change', input.name, value);
@@ -1028,8 +1026,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this2 = this;
 	
 	      return function (inputName, value) {
-	        console.log(form.name);
-	        console.log(form);
+	        console.log('test');
 	        _this2.model[form.name] = form.model;
 	        _this2.errors[form.name] = form.errors;
 	        _this2.trigger('change', form.name, form.model);
