@@ -1026,7 +1026,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this2 = this;
 	
 	      return function (inputName, value) {
-	        console.log('test');
 	        _this2.model[form.name] = form.model;
 	        _this2.errors[form.name] = form.errors;
 	        _this2.trigger('change', form.name, form.model);
@@ -2440,7 +2439,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'addNestedForm',
 	    value: function addNestedForm(form) {
-	      (0, _assert2.default)(form.name, 'A form must have a name');
 	      (0, _assert2.default)(form instanceof _form2.default, 'A form must be instance of Form');
 	      form.name = this._name + '.' + form.name;
 	      this._forms[form.name] = form;
@@ -3500,6 +3498,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  getFormName: function getFormName() {
 	    return this.opts.formName || this.opts.model.formName;
+	  },
+	  valueIs: function valueIs(value) {
+	    return this.opts.model.value === value;
 	  },
 	  handleChange: function handleChange(e) {
 	    this.assignValue(e.target.value);
