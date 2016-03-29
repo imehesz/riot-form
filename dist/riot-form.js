@@ -1028,7 +1028,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return function (inputName, value) {
 	        _this2.model[form.name] = form.model;
 	        _this2.errors[form.name] = form.errors;
-	        _this2.trigger('change', form.name, form.model);
+	        _this2.trigger('change', form.name + '.' + inputName, form.model);
 	      };
 	    }
 	  }, {
