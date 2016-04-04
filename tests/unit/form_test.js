@@ -19,6 +19,18 @@ describe('Form', () => {
     })
   })
 
+  describe('forms', () => {
+    it('should be undefined when form does not exist', () => {
+      const form = new Form.Builder('foo').build()
+      expect(form.forms.whatever).to.be.undefined
+    })
+
+    it('should return form when present', () => {
+      const nestedForm = new Form.Builder('bar').build()
+      const form = new Form.Builder('foo').addNestedForm(nestedForm).build()
+      expect(form.forms.bar).to.be.eq(nestedForm)
+    })
+  })
 
   it('should synchronize inputs', () => {
     const input = new inputs.TextInput({name: 'foo'})
@@ -35,6 +47,15 @@ describe('Form', () => {
     expect(input.value).to.eq('bar')
   })
 
+  it('should set form initial value', () => {
+    const nestedForm = new Form.Builder('bar').build()
+    const form = new Form.Builder('foo').setModel({bar: {name: 'baz'}})
+                  .addNestedForm(nestedForm).build()
+    expect(form.model.bar).to.deep.eq({name: 'baz'})
+    expect(nestedForm.model).to.deep.eq({name:'baz'})
+    expect(nestedForm.model.name).to.eq('baz')
+  })
+
   describe('model setter', () => {
     it('should update model', () => {
       const form = new Form.Builder('foo').setModel({foo: 'bar'}).build()
@@ -49,6 +70,15 @@ describe('Form', () => {
       expect(input.value).to.eq('bar')
       form.model = { foo: 'baz' }
       expect(input.value).to.eq('baz')
+    })
+
+    it('should update form models', () => {
+      const nestedForm = new Form.Builder('bar').build()
+      const form = new Form.Builder('foo').setModel({bar: {name: 'bar'}})
+                    .addNestedForm(nestedForm).build()
+      expect(nestedForm.model).to.deep.eq({name:'bar'})
+      form.model = {bar: {name: 'baz'}}
+      expect(nestedForm.model).to.deep.eq({name:'baz'})
     })
   })
 
