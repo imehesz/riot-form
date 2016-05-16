@@ -2,8 +2,7 @@
   <textarea
       id={ getID() }
       name={ getName() }
-      onkeyup={ handleChange }
-      onchange={ handleChange }
+      oninput={ handleChange }
       placeholder={ getPlaceholder() }></textarea>
 
   <script>

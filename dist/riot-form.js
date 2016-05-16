@@ -1207,7 +1207,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = function () {
+	exports.default = (function () {
 	  function defineProperties(target, props) {
 	    for (var i = 0; i < props.length; i++) {
 	      var descriptor = props[i];
@@ -1223,7 +1223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (staticProps) defineProperties(Constructor, staticProps);
 	    return Constructor;
 	  };
-	}();
+	})();
 
 /***/ },
 /* 51 */
@@ -3347,13 +3347,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	__webpack_require__(84);
-	
+
 	__webpack_require__(85);
-	
+
 	__webpack_require__(87);
-	
+
 	__webpack_require__(88);
 
 /***/ },
@@ -3362,7 +3362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-form', '<form name="{opts.model.name}" class="{opts.className}" onsubmit="{opts.onsubmit}"> <rf-input each="{name, input in opts.model.inputs}" model="{input}"> <yield></yield> </form>', '', '', function (opts) {});
+	riot.tag2('rf-form', '<form name="{opts.model.name}" class="{opts.className}" onsubmit="{opts.onsubmit}"> <rf-input each="{name, input in opts.model.inputs}" model="{input}"> <yield></yield> </form>', '', '', function (opts) {}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
 
 /***/ },
@@ -3420,10 +3420,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-text-input', '<input id="{getID()}" name="{getName()}" class="{opts.className}" type="{opts.model.type}" onkeyup="{handleChange}" onchange="{handleChange}" __autofocus="{opts.autofocus}" placeholder="{getPlaceholder()}">', '', '', function (opts) {
+	riot.tag2('rf-text-input', '<input id="{getID()}" name="{getName()}" class="{opts.className}" type="{opts.model.type}" oninput="{handleChange}" __autofocus="{opts.autofocus}" placeholder="{getPlaceholder()}">', '', '', function (opts) {
 	    this.mixin('rf-input-helpers');
 	    this.initializeValue();
-	});
+	}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
 
 /***/ },
@@ -3432,10 +3432,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-textarea-input', '<textarea id="{getID()}" name="{getName()}" onkeyup="{handleChange}" onchange="{handleChange}" placeholder="{getPlaceholder()}"></textarea>', '', '', function (opts) {
+	riot.tag2('rf-textarea-input', '<textarea id="{getID()}" name="{getName()}" oninput="{handleChange}" placeholder="{getPlaceholder()}"></textarea>', '', '', function (opts) {
 	    this.mixin('rf-input-helpers');
 	    this.initializeValue();
-	});
+	}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
 
 /***/ },
@@ -3443,7 +3443,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	__webpack_require__(90);
 
 /***/ },

@@ -4,8 +4,7 @@
       name={ getName() }
       class={ opts.className }
       type={ opts.model.type }
-      onkeyup={ handleChange }
-      onchange={ handleChange }
+      oninput={ handleChange }
       autofocus={ opts.autofocus }
       placeholder={ getPlaceholder() }>
 
