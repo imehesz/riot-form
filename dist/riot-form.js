@@ -3318,8 +3318,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	TelInput.defaultTag = 'rf-text-input';
 	TelInput.type = 'tel';
 	
-	var TextareaInput = function (_BaseInput7) {
-	  (0, _inherits3.default)(TextareaInput, _BaseInput7);
+	var DateInput = function (_BaseInput7) {
+	  (0, _inherits3.default)(DateInput, _BaseInput7);
+	
+	  function DateInput() {
+	    (0, _classCallCheck3.default)(this, DateInput);
+	    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(DateInput).apply(this, arguments));
+	  }
+	
+	  return DateInput;
+	}(_base2.default);
+	
+	DateInput.defaultTag = 'rf-text-input';
+	DateInput.type = 'date';
+	
+	var TextareaInput = function (_BaseInput8) {
+	  (0, _inherits3.default)(TextareaInput, _BaseInput8);
 	
 	  function TextareaInput() {
 	    (0, _classCallCheck3.default)(this, TextareaInput);
@@ -3339,6 +3353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  NumberInput: NumberInput,
 	  URLInput: URLInput,
 	  TelInput: TelInput,
+	  DateInput: DateInput,
 	  TextareaInput: TextareaInput
 	};
 
@@ -3382,30 +3397,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_riot2.default.tag('rf-input', _rfInput2.default, function (opts) {
-	  var _this = this;
-	
-	  this.mixin('rf-input-helpers');
-	  var tag = null;
-	  var currentValue = null;
-	
-	  var makeData = function makeData() {
-	    return { model: opts.model, formName: opts.formName };
-	  };
-	
-	  this.on('mount', function () {
-	    var input = _this.root.querySelector('[rf-input-elem]');
-	    if (!input) {
-	      throw new Error('element with attribute rf-input-elem not found in rf-input html');
-	    }
-	    tag = _riot2.default.mount(input, opts.model.tag, makeData())[0];
-	  });
-	
-	  this.on('update', function () {
-	    if (tag && opts.model.value !== currentValue) {
-	      currentValue = opts.model.value;
-	      tag.update(makeData());
-	    }
-	  });
+	  this.mixin('rf-input-helpers', 'rf-base-input');
 	});
 
 /***/ },
@@ -3445,6 +3437,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	__webpack_require__(90);
+	
+	__webpack_require__(91);
 
 /***/ },
 /* 90 */
@@ -3508,10 +3502,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	  initializeValue: function initializeValue() {
 	    var _this = this;
 	
-	    this.on('mount', function () {
+	    this.on('mount update', function () {
 	      var input = _this[_this.getName()];
-	      if (input && _this.opts.model.value !== undefined) {
-	        input.value = _this.opts.model.value;
+	      if (input) {
+	        input.value = _this.opts.model.value || '';
+	      }
+	    });
+	  }
+	});
+
+/***/ },
+/* 91 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _riot = __webpack_require__(53);
+	
+	var _riot2 = _interopRequireDefault(_riot);
+	
+	var _config = __webpack_require__(46);
+	
+	var _config2 = _interopRequireDefault(_config);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	_riot2.default.mixin('rf-base-input', {
+	  init: function init() {
+	    var _this = this;
+	
+	    var tag = null;
+	    var currentValue = null;
+	
+	    var makeData = function makeData() {
+	      return { model: _this.opts.model, formName: _this.opts.formName };
+	    };
+	
+	    this.on('mount', function () {
+	      var input = _this.root.querySelector('[rf-input-elem]');
+	      if (!input) {
+	        throw new Error('element with attribute rf-input-elem not found in rf-input html');
+	      }
+	      tag = _riot2.default.mount(input, _this.opts.model.tag, makeData())[0];
+	    });
+	
+	    this.on('update', function () {
+	      if (tag && _this.opts.model.value !== currentValue) {
+	        currentValue = _this.opts.model.value;
+	        tag.update(makeData());
 	      }
 	    });
 	  }
