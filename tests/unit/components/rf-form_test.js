@@ -7,7 +7,8 @@ describe('rf-form', () => {
   const form = new Form.Builder('hello')
           .addInput({name: 'username', type: 'text'})
           .addInput({name: 'other', type: 'text'})
-          .setModel({username: 'world'})
+          .addInput({name: 'hideme', type: 'hidden'})
+          .setModel({username: 'world', hideme: 'i-am-hidden'})
           .build()
 
   before(() => {
@@ -34,6 +35,14 @@ describe('rf-form', () => {
     expect(input).not.to.be.null
     expect(input.placeholder).to.eq('Username')
     expect(input.value).to.eq('world')
+  })
+
+  it('should render hidden inputs without label', () => {
+    const input = document.querySelector('input[name="hello_hideme"]')
+    expect(input).not.to.be.null
+    expect(input.value).to.eq('i-am-hidden')
+    const label = document.querySelector('label[for="hello_hideme"]')
+    expect(label).to.be.null
   })
 
   it('should not set undefined initial values', () => {

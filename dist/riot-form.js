@@ -948,6 +948,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  (0, _createClass3.default)(Form, [{
+	    key: 'filterInputs',
+	    value: function filterInputs(inputs, p) {
+	      var filtered = {};
+	      for (var name in inputs) {
+	        if (p(inputs[name])) {
+	          filtered[name] = inputs[name];
+	        }
+	      }
+	      return filtered;
+	    }
+	  }, {
 	    key: '_setInputValues',
 	    value: function _setInputValues() {
 	      var _iteratorNormalCompletion = true;
@@ -1121,6 +1132,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'inputs',
 	    get: function get() {
 	      return this._inputs;
+	    }
+	  }, {
+	    key: 'visibleInputs',
+	    get: function get() {
+	      return this.filterInputs(this.inputs, function (input) {
+	        return input.type !== 'hidden';
+	      });
+	    }
+	  }, {
+	    key: 'hiddenInputs',
+	    get: function get() {
+	      return this.filterInputs(this.inputs, function (input) {
+	        return input.type === 'hidden';
+	      });
 	    }
 	  }, {
 	    key: 'forms',
@@ -3346,6 +3371,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	TextareaInput.defaultTag = 'rf-textarea-input';
 	TextareaInput.type = 'textarea';
 	
+	var HiddenInput = function (_BaseInput9) {
+	  (0, _inherits3.default)(HiddenInput, _BaseInput9);
+	
+	  function HiddenInput() {
+	    (0, _classCallCheck3.default)(this, HiddenInput);
+	    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(HiddenInput).apply(this, arguments));
+	  }
+	
+	  return HiddenInput;
+	}(_base2.default);
+	
+	HiddenInput.defaultTag = 'rf-text-input';
+	HiddenInput.type = 'hidden';
+	
 	exports.default = {
 	  TextInput: TextInput,
 	  EmailInput: EmailInput,
@@ -3354,7 +3393,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  URLInput: URLInput,
 	  TelInput: TelInput,
 	  DateInput: DateInput,
-	  TextareaInput: TextareaInput
+	  TextareaInput: TextareaInput,
+	  HiddenInput: HiddenInput
 	};
 
 /***/ },
@@ -3377,7 +3417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(riot) {'use strict';
 	
-	riot.tag2('rf-form', '<form name="{opts.model.name}" class="{opts.className}" onsubmit="{opts.onsubmit}"> <rf-input each="{name, input in opts.model.inputs}" model="{input}"> <yield></yield> </form>', '', '', function (opts) {}, '{ }');
+	riot.tag2('rf-form', '<form name="{opts.model.name}" class="{opts.className}" onsubmit="{opts.onsubmit}"> <rf-text-input each="{name, input in opts.model.hiddenInputs}" model="{input}"></rf-text-input> <rf-input each="{name, input in opts.model.visibleInputs}" model="{input}"></rf-input> <yield></yield> </form>', '', '', function (opts) {}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
 
 /***/ },
