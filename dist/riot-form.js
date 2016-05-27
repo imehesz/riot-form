@@ -971,7 +971,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	          var input = this.inputs[name];
 	          input.off('change');
-	          input.value = this.model[input.name];
+	          input.setValue(this.model[input.name], { update: true, silent: true });
 	          input.on('change', this._makeChangeHandler(input));
 	        }
 	      } catch (err) {
@@ -2549,15 +2549,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _riot2.default.observable(this);
 	    (0, _assert2.default)(config.name, 'An input must have a name');
 	    this.config = config;
-	    this._setValue(config.value || this.defaultValue, { silent: true });
+	    this.setValue(config.value || this.defaultValue, { silent: true });
 	    if (config.formName) {
 	      this.formName = config.formName;
 	    }
 	  }
 	
 	  (0, _createClass3.default)(BaseInput, [{
-	    key: '_setValue',
-	    value: function _setValue(rawValue) {
+	    key: 'setValue',
+	    value: function setValue(rawValue) {
 	      var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 	
 	      var value = this.process(rawValue);
@@ -2569,6 +2569,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.validate();
 	      if (!options.silent) {
 	        this.trigger('change', value);
+	      }
+	      if (options.update) {
+	        this.trigger('change:update', value);
 	      }
 	    }
 	  }, {
@@ -2599,7 +2602,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'value',
 	    set: function set(value) {
-	      this._setValue(value);
+	      this.setValue(value);
 	    },
 	    get: function get() {
 	      return this._value;
@@ -3528,7 +3531,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return this.opts.inputContainerClassName || _config2.default.inputContainerClassName;
 	  },
 	  assignValue: function assignValue(value) {
-	    this.opts.model.value = value;
+	    this.opts.model.setValue(value);
 	  },
 	  getFormName: function getFormName() {
 	    return this.opts.formName || this.opts.model.formName;
@@ -3542,11 +3545,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  initializeValue: function initializeValue() {
 	    var _this = this;
 	
-	    this.on('mount update', function () {
+	    this.on('mount', function () {
 	      var input = _this[_this.getName()];
 	      if (input) {
 	        input.value = _this.opts.model.value || '';
 	      }
+	      _this.opts.model.on('change:update', function () {
+	        input.value = _this.opts.model.value || '';
+	      });
 	    });
 	  }
 	});

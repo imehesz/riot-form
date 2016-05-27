@@ -5,7 +5,7 @@ const WebdriverIO = require('webdriverio')
 const client = WebdriverIO.remote({
   host: 'localhost',
   desiredCapabilities: {
-    browerName: 'firefox'
+    browserName: 'firefox'
   }
 })
 
