@@ -1,11 +1,12 @@
-SELENIUM_JAR		= tmp/selenium-server-standalone.52.0.jar
+SELENIUM_JAR		= tmp/selenium-server-standalone.53.0.jar
 BOWER_COMPONENTS	= tests/integration/pages/components
 NODE_MODULES		= node_modules
+SELENIUM_URL        = http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
 
 all: test dist_build
 
 $(SELENIUM_JAR):
-	wget http://goo.gl/qTy1IB -O $(SELENIUM_JAR)
+	wget $(SELENIUM_URL) -O $(SELENIUM_JAR)
 
 prepare: $(SELENIUM_JAR) $(BOWER_COMPONENTS) $(NODE_MODULES)
 
@@ -41,5 +42,8 @@ run_integration: normal_build
 integration: selenium run_integration kill_selenium
 
 test: prepare lint unit integration
+
+watch:
+	gulp watch
 
 .PHONY: test unit prepare
