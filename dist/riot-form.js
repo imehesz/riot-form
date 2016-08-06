@@ -2603,6 +2603,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // TODO: pre pack some processors to avoid having to pass a callback
 	
 	  }, {
+	    key: 'isEmpty',
+	    value: function isEmpty() {
+	      return !this.value;
+	    }
+	  }, {
 	    key: 'name',
 	    get: function get() {
 	      return this.config.name;
@@ -3337,6 +3342,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'preProcessValue',
 	    value: function preProcessValue(value) {
 	      return parseFloat(value);
+	    }
+	  }, {
+	    key: 'isEmpty',
+	    value: function isEmpty() {
+	      return isNaN(this.value);
 	    }
 	  }]);
 	  return NumberInput;

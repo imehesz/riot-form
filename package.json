@@ -1,6 +1,6 @@
 {
   "name": "riot-form",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Form inputs for RiotJS",
   "main": "dist/riot-form.js",
   "scripts": {
