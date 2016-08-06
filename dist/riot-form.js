@@ -3333,6 +3333,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(NumberInput).apply(this, arguments));
 	  }
 	
+	  (0, _createClass3.default)(NumberInput, [{
+	    key: 'preProcessValue',
+	    value: function preProcessValue(value) {
+	      return parseFloat(value);
+	    }
+	  }]);
 	  return NumberInput;
 	}(_base2.default);
 	
