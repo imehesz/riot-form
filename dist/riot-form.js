@@ -885,11 +885,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	exports.capitalize = capitalize;
+	exports.padLeft = padLeft;
 	function capitalize(str) {
 	  if (!str) {
 	    return '';
 	  }
 	  return str[0].toUpperCase() + str.substring(1);
+	}
+	
+	function padLeft(str, length) {
+	  var char = arguments.length <= 2 || arguments[2] === undefined ? ' ' : arguments[2];
+	
+	  while (str.length < length) {
+	    str = char + str;
+	  }
+	  return str;
 	}
 
 /***/ },
@@ -2560,7 +2570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function setValue(rawValue) {
 	      var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 	
-	      var value = this.process(rawValue);
+	      var value = this.process(this.preProcessValue(rawValue));
 	      if (value === this._value) {
 	        return;
 	      }
@@ -2584,6 +2594,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.errors = this.config.validate(this._value);
 	      }
 	    }
+	  }, {
+	    key: 'preProcessValue',
+	    value: function preProcessValue(value) {
+	      return value;
+	    }
+	
+	    // TODO: pre pack some processors to avoid having to pass a callback
+	
 	  }, {
 	    key: 'name',
 	    get: function get() {
@@ -2640,9 +2658,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      return this.defaultFormatErrors(this.errors);
 	    }
-	
-	    // TODO: pre pack some processors to avoid having to pass a callback
-	
 	  }, {
 	    key: 'process',
 	    get: function get() {
@@ -3240,6 +3255,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
+	var _createClass2 = __webpack_require__(50);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
 	var _getPrototypeOf = __webpack_require__(61);
 	
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -3259,6 +3278,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _base = __webpack_require__(60);
 	
 	var _base2 = _interopRequireDefault(_base);
+	
+	var _util = __webpack_require__(47);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3354,6 +3375,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(DateInput).apply(this, arguments));
 	  }
 	
+	  (0, _createClass3.default)(DateInput, [{
+	    key: 'preProcessValue',
+	    value: function preProcessValue(value) {
+	      var timestamp = Date.parse(value);
+	      if (!timestamp) {
+	        return value;
+	      }
+	      var date = new Date(timestamp);
+	      return [date.getFullYear(), (0, _util.padLeft)((date.getMonth() + 1).toString(), 2, '0'), (0, _util.padLeft)(date.getDate().toString(), 2, '0')].join('-');
+	    }
+	  }]);
 	  return DateInput;
 	}(_base2.default);
 	
