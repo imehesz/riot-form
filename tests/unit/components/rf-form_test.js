@@ -7,6 +7,12 @@ describe('rf-form', () => {
   const form = new Form.Builder('hello')
           .addInput({name: 'username', type: 'text'})
           .addInput({name: 'other', type: 'text'})
+          .addInput({
+            name: 'customized',
+            type: 'text',
+            inputLabel: 'Customized label',
+            inputPlaceholder: 'Customized placeholder'
+          })
           .addInput({name: 'hideme', type: 'hidden'})
           .setModel({username: 'world', hideme: 'i-am-hidden'})
           .build()
@@ -30,11 +36,23 @@ describe('rf-form', () => {
     expect(label.innerText || label.textContent).to.eq('Username')
   })
 
+  it('should allow to customize labels', () => {
+    const label = document.querySelector('label[for="hello_customized"]')
+    expect(label).not.to.be.null
+    expect(label.innerText || label.textContent).to.eq('Customized label')
+  })
+
   it('should render the input', () => {
     const input = document.querySelector('input[name="hello_username"]')
     expect(input).not.to.be.null
     expect(input.placeholder).to.eq('Username')
     expect(input.value).to.eq('world')
+  })
+
+  it('should allow to customize placeholders', () => {
+    const input = document.querySelector('input[name="hello_customized"]')
+    expect(input).not.to.be.null
+    expect(input.placeholder).to.eq('Customized placeholder')
   })
 
   it('should render hidden inputs without label', () => {

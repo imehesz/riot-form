@@ -3552,31 +3552,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.currentValue = this.opts.model.value;
 	  },
 	  getID: function getID() {
-	    return this.opts.inputId || _config2.default.makeID(this.opts.model.name, this.getFormName());
+	    return this.getProperty('inputId') || _config2.default.makeID(this.opts.model.name, this.getFormName());
 	  },
 	  getName: function getName() {
-	    return this.opts.inputName || _config2.default.makeName(this.opts.model.name, this.getFormName());
+	    return this.getProperty('inputName') || _config2.default.makeName(this.opts.model.name, this.getFormName());
 	  },
 	  getLabel: function getLabel() {
-	    return this.opts.inputLabel || _config2.default.formatLabel(this.opts.model.name, this.getFormName());
+	    return this.getProperty('inputLabel') || _config2.default.formatLabel(this.opts.model.name, this.getFormName());
 	  },
 	  getPlaceholder: function getPlaceholder() {
-	    return this.opts.inputPlaceholder || _config2.default.formatPlaceholder(this.opts.model.name, this.getFormName());
+	    return this.getProperty('inputPlaceholder') || _config2.default.formatPlaceholder(this.opts.model.name, this.getFormName());
 	  },
 	  formatErrors: function formatErrors(errors) {
 	    return _config2.default.formatErrors(errors, this.opts.model.name, this.getFormName());
 	  },
 	  getLabelClassName: function getLabelClassName() {
-	    return this.opts.labelClassName || _config2.default.labelClassName;
+	    return this.getProperty('labelClassName') || _config2.default.labelClassName;
 	  },
 	  getGroupClassName: function getGroupClassName() {
-	    return this.opts.groupClassName || _config2.default.groupClassName;
+	    return this.getProperty('groupClassName') || _config2.default.groupClassName;
 	  },
 	  getErrorClassName: function getErrorClassName() {
-	    return this.opts.errorClassName || _config2.default.errorClassName;
+	    return this.getProperty('errorClassName') || _config2.default.errorClassName;
 	  },
 	  getInputContainerClassName: function getInputContainerClassName() {
-	    return this.opts.inputContainerClassName || _config2.default.inputContainerClassName;
+	    return this.getProperty('inputContainerClassName') || _config2.default.inputContainerClassName;
+	  },
+	  getProperty: function getProperty(propertyName) {
+	    return this.opts[propertyName] || this.opts.model.config[propertyName];
 	  },
 	  assignValue: function assignValue(value) {
 	    this.opts.model.setValue(value);
