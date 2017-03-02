@@ -1,6 +1,8 @@
 /node_modules
 /tests/fixtures/components
 /tests/fixtures/js
+tmp/*
+!tmp/.keep
 
 *.jar
 /dist
