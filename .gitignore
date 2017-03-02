@@ -1,6 +1,6 @@
 /node_modules
-/tests/integration/pages/components
-/tests/integration/pages/js
+/tests/fixtures/components
+/tests/fixtures/js
 
 *.jar
 /dist
