@@ -1,7 +1,7 @@
-SELENIUM_JAR		= tmp/selenium-server-standalone.53.0.jar
+SELENIUM_JAR		= tmp/selenium-server-standalone.3.1.0.jar
 BOWER_COMPONENTS	= tests/integration/pages/components
 NODE_MODULES		= node_modules
-SELENIUM_URL        = http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
+SELENIUM_URL        = https://goo.gl/sLTIW7
 
 all: test dist_build
 
@@ -31,10 +31,12 @@ dist_build:
 	NODE_ENV=production ./node_modules/.bin/webpack -p
 
 selenium: prepare
-	java -jar $(SELENIUM_JAR) >> tmp/selenium.log 2>&1 &
+	@echo 'Starting selenium...'
+	@java -jar $(SELENIUM_JAR) >> tmp/selenium.log 2>&1 &
 
 kill_selenium: prepare
-	ps aux | grep $(SELENIUM_JAR) | grep -v grep | awk '{ print $$2 }' | xargs kill
+	@echo 'Stopping selenium...'
+	@ps aux | grep $(SELENIUM_JAR) | grep -v grep | awk '{ print $$2 }' | xargs kill
 
 run_integration: normal_build
 	./node_modules/.bin/gulp features

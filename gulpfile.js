@@ -37,19 +37,23 @@ gulp.task('test', function (done) {
 
 gulp.task('server', function () {
   const app = connect()
-  app.use(serveStatic(path.resolve('./tests/integration/pages')))
+  app.use(serveStatic(path.resolve('./tests/fixtures')))
   server = http.createServer(app)
   server.listen(process.env.PORT || 5050)
 })
 
-gulp.task('features', ['server'], function () {
-  return gulp.src('./tests/integration/**/*.feature')
-    .pipe(cucumber({
-      steps: './tests/integration/steps/*.js',
-      support: './tests/integration/support/*.js'
-    }))
-    .on('error', onExit)
-    .once('end', onExit)
+gulp.task('features', ['server'], function (cb) {
+  const proc = spawn('./node_modules/.bin/cucumber-js', ['tests/integration'])
+  proc.stdout.on('data', function (data) {
+    console.log(data.toString())
+  })
+  proc.stderr.on('data', function (data) {
+    console.error(data.toString())
+  })
+  proc.on('exit', function (code) {
+    onExit()
+    cb(code === 0 ? null : new Error(`exited with code ${code}`))
+  })
 })
 
 gulp.task('webpack:watch', function () {

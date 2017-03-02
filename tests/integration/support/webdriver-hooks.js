@@ -1,6 +1,7 @@
 'use strict'
 
 const WebdriverIO = require('webdriverio')
+const cucumber = require('cucumber')
 
 const client = WebdriverIO.remote({
   host: 'localhost',
@@ -11,14 +12,13 @@ const client = WebdriverIO.remote({
 
 const promised = client.init()
 
-module.exports = function () {
-  this.Before(function () {
+cucumber.defineSupportCode(function (support) {
+  support.Before(function () {
     this.browser = client
     return promised
   })
 
-  this.registerHandler('AfterFeatures', function (event, callback) {
-    client.end()
-    callback()
+  support.registerHandler('AfterFeatures', function (event, callback) {
+    client.end().then(() => callback()).catch(callback)
   })
-}
+})

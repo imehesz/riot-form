@@ -1,7 +1,7 @@
 'use strict'
 
-var path    = require('path')
-var webpack = require('webpack')
+const path    = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   entry: {
@@ -15,21 +15,21 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
-    preLoaders: [{
+    rules: [{
+      enforce: 'pre',
       test: /\.tag$/,
-      loader: 'riotjs',
+      loader: 'riotjs-loader',
       exclude: /node_modules/,
-      query: { type: 'none' }
-    }],
-    loaders: [{
+      options: { type: 'none' }
+    }, {
       test: /\.js|\.tag/,
       exclude: /node_modules/,
-      loader: 'babel',
-      query: {
+      loader: 'babel-loader',
+      options: {
         presets: ['es2015'],
         plugins: ['transform-runtime']
       }
-    }, {test: /\.html$/, loader: 'html'}]
+    }, {test: /\.html$/, loader: 'html-loader'}]
   },
   resolve: {
     alias: {
